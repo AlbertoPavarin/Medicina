@@ -64,3 +64,11 @@
     /* Height of the footer*/
     height: 40px;
 }
+
+#main {
+  padding-bottom: 20px;
+}
+
+.table{
+  font-size: 10px;
+}

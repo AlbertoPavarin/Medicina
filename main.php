@@ -1,4 +1,11 @@
 <?php
+
+if (!isset($_GET['page']))
+{
+    include("pages/content-404.php");
+    die();
+}
+
 $page = $_GET['page'];
 switch ($page) {
     case 0:
