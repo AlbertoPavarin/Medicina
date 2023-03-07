@@ -1,7 +1,30 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST")
+
+session_start();
+
+include_once dirname(__FILE__) . '/../functions/login.php';
+include_once dirname(__FILE__) . '/../functions/checkLogin.php';
+
+if (count($_SESSION) > 0)
 {
-    echo $_POST["username"] . $_POST["password"];
+    header('Location: index.php?page=1');
+    exit();
+};
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  if (!empty($_POST['email']) && !empty($_POST['password'])) {
+
+    var_dump($_POST['password']);
+    $data = [
+      "email" => $_POST['email'],
+      "password" => hash("sha256", $_POST['password']),
+    ];
+
+    if (login($data) == -1)
+    {
+      echo "Email o password errata";
+    }
+  }
 }
 ?>
 <div class="mr-4 ml-4">
@@ -9,10 +32,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     <h1>Login</h1>
     <h5 id="error-message"></h5>
     <form class="mt-4" method="post">
-      <label class="mt-4" for="username">
-        Username
+      <label class="mt-4" for="email">
+        Email
       </label>
-      <input name="username" type="text" class="form-control w-100" autoComplete="Off" placeholder="Enter your Username"/>
+      <input name="email" type="email" class="form-control w-100" autoComplete="Off" placeholder="Enter your Email"/>
       <label class="mt-4" for="password">
         Password
       </label>
