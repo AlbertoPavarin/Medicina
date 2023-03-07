@@ -2,7 +2,7 @@
 
 if (!isset($_GET['page']))
 {
-    include("pages/content-404.php");
+    include("pages/content-404.php"); // checkLogin
     die();
 }
 

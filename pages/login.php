@@ -14,7 +14,6 @@ if (count($_SESSION) > 0)
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   if (!empty($_POST['email']) && !empty($_POST['password'])) {
 
-    var_dump($_POST['password']);
     $data = [
       "email" => $_POST['email'],
       "password" => hash("sha256", $_POST['password']),

@@ -1,7 +1,11 @@
 <?php
 
+session_start();
 include_once dirname(__FILE__) . '/../functions/getArchiveActivities.php';
+include_once dirname(__FILE__) . '/../functions/checkLogin.php';
 
+$user = checkLogin();
+var_dump($user);
 $activities = array();
 $response = getArchiveActivities();
 
