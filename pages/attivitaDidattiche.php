@@ -5,7 +5,7 @@ include_once dirname(__FILE__) . '/../functions/getArchiveActivities.php';
 include_once dirname(__FILE__) . '/../functions/checkLogin.php';
 
 $user = checkLogin();
-var_dump($user);
+
 $activities = array();
 $response = getArchiveActivities();
 
@@ -23,6 +23,7 @@ while($record = $response->fetch_assoc())
       <th scope="col">Ore lezione</th>
       <th scope="col">Ore laboratorio</th>
       <th scope="col">Ore tirocinio</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
@@ -37,6 +38,14 @@ while($record = $response->fetch_assoc())
       <td><?php echo $row["lezione"] ?></td>
       <td><?php echo $row["laboratorio"] ?></td>
       <td><?php echo $row["tirocinio"] ?></td>
+      <?php 
+      if ($user["ruolo"] == "Admin")
+      {
+      ?>
+        <td><a href="index.php?page=2&attivita=<?php echo $row["codice"] ?>">modifica</a></td>
+      <?php
+      }
+      ?>
     </tr>
     <?php
     }

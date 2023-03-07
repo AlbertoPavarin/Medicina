@@ -1,8 +1,15 @@
 <?php
 
+include_once dirname(__FILE__) . '/functions/getArchiveActivities.php';
+include_once dirname(__FILE__) . '/functions/checkLogin.php';
+
 if (!isset($_GET['page']))
 {
-    include("pages/content-404.php"); // checkLogin
+    $user = checkLogin(); // checkLogin
+    if ($user)
+    {
+        header("Location: index.php?page=1");
+    }
     die();
 }
 

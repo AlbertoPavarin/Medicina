@@ -7,7 +7,6 @@ function checkLogin()
     if (isset($_SESSION['user_id']))
     {
         $id = $_SESSION['user_id'];
-        var_dump($id);
         $user = getUser($id);
         return $user;
     }

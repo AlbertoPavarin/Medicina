@@ -18,7 +18,7 @@ function login($data)
      {
         $_SESSION['user_id'] = $response->fetch_assoc()["id"];
         var_dump($_SESSION);
-        //header('Location: index.php?page=1');
+        header('Location: index.php?page=1');
      }
      else
      {
