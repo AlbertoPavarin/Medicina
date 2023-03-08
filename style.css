@@ -72,3 +72,8 @@
 .table{
   font-size: 10px;
 }
+
+#activities-select
+{
+  width: 70%;
+}

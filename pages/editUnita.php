@@ -1,11 +1,17 @@
 <?php
 include_once dirname(__FILE__) . '/../functions/getActivity.php';
+include_once dirname(__FILE__) . '/../functions/getUnity.php';
 include_once dirname(__FILE__) . '/../functions/updateActivity.php';
+include_once dirname(__FILE__) . '/../functions/updateUnity.php';
+include_once dirname(__FILE__) . '/../functions/addUnity.php';
 
 $attivita = array(
     "codice" => "",
     "nome" => "",
     "CFU" => "",
+    "settore" => "",
+    "n_settore" => "",
+    "TAF_ambito" => "",
     "ore_lezione" => "",
     "ore_tirocinio" => "",
     "ore_laboratorio" => "",
@@ -15,22 +21,49 @@ $attivita = array(
     "anno1" => "",
     "anno2" => "");
 
+$opzione = "Aggiungi";
+
 if (isset($_GET["attivita"]))
 {
-    $attivita = getActivity($_GET["attivita"])->fetch_assoc();
+    $opzione = "Modifica";
+    $attivita = getUnity($_GET["attivita"])->fetch_assoc();
     if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
-        if(updateActivity($_GET["attivita"], $_POST))
+        if(updateUnity($_GET["attivita"], $_POST))
         {
             echo "<script>alert('Unità modificata')
                     location.href = 'index.php?page=3'</script>";
         }
     }
 }
+else if ($_SERVER["REQUEST_METHOD"] == "POST")
+{
+    if(addUnity($_POST))
+    {
+        echo "<script>alert('Unità aggiunta')
+                location.href = 'index.php?page=3'</script>";
+    }
+}
+
+$activities = array();
+$response = getArchiveActivities();
+ 
+while($record = $response->fetch_assoc())
+{
+    $activities[] = $record;
+}  
+
 ?>
 
 <div class="row">
     <form action="" method="post">
+        <?php if (!isset($_GET["attivita"]))
+            {?>
+            <div class="col-12">
+                <label for="codice">Codice</label>
+                <input type="text" name="codice" class="form-control">
+            </div>
+        <?php }?>
         <div class="col-12">
             <label for="nome">Nome</label>
             <input type="text" name="nome" class="form-control" value="<?php echo $attivita["nome"] ?>">
@@ -38,6 +71,18 @@ if (isset($_GET["attivita"]))
         <div class="col-12">
             <label for="cfu">CFU</label>
             <input type="text" name="cfu" class="form-control" value="<?php echo $attivita["CFU"] ?>">
+        </div>
+        <div class="col-12">
+            <label for="settore">Settore</label>
+            <input type="text" name="settore" class="form-control" value="<?php echo $attivita["settore"] ?>">
+        </div>
+        <div class="col-12">
+            <label for="n_settore">Numero Settore</label>
+            <input type="text" name="n_settore" class="form-control" value="<?php echo $attivita["n_settore"] ?>">
+        </div>
+        <div class="col-12">
+            <label for="TAF_ambito">TAF Ambito</label>
+            <input type="text" name="TAF_ambito" class="form-control" value="<?php echo $attivita["TAF_ambito"] ?>">
         </div>
         <div class="col-12">
             <label for="ore_lezione">Ore lezione</label>
@@ -71,8 +116,19 @@ if (isset($_GET["attivita"]))
             <label for="anno2">Anno 2</label>
             <input type="text" name="anno2" class="form-control" value="<?php echo $attivita["anno2"] ?>">
         </div>
+        <div class="d-flex justify-content-center align-items-center mt-4">
+            <select id="activities-select" aria-label="Default select example" onchange=getBreakByPickup(this)>
+                    <option selected>Seleziona attività</option>
+                    <?php
+                    foreach($activities as $activity)
+                    {?>
+                        <option value="<?php echo $activity["codice"] ?>"><?php echo $activity["nome"] ?></option>
+                    <?php }
+                    ?>
+            </select> 
+        </div> 
         <div class="col-12 mt-3">
-            <input type="submit" class="btn btn-primary" value="Modifica">
+            <input type="submit" class="btn btn-primary" value= '<?php echo $opzione ?>' >
         </div>
     </form>
 </div>

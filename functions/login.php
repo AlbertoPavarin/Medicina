@@ -9,7 +9,7 @@ function login($data)
 
     $sql = sprintf("SELECT u.id
             FROM utente u
-            WHERE u.email = '%s' AND u.password = '%s'", $conn->real_escape_string($data["email"]), $conn->real_escape_string(hash("sha256", $data["password"])));
+            WHERE u.email = '%s' AND u.password = '%s'", $conn->real_escape_string($data["email"]), $conn->real_escape_string($data["password"]));
 
      $response = $conn->query($sql);
 

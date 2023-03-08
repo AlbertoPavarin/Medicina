@@ -1,6 +1,7 @@
 <?php
 include_once dirname(__FILE__) . '/../functions/getActivity.php';
 include_once dirname(__FILE__) . '/../functions/updateActivity.php';
+include_once dirname(__FILE__) . '/../functions/addActivity.php';
 
 $attivita = array(
     "codice" => "",
@@ -15,8 +16,11 @@ $attivita = array(
     "anno1" => "",
     "anno2" => "");
 
+$opzione = "Aggiungi";
+
 if (isset($_GET["attivita"]))
 {
+    $opzione = "Modifica";
     $attivita = getActivity($_GET["attivita"])->fetch_assoc();
     if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
@@ -27,10 +31,25 @@ if (isset($_GET["attivita"]))
         }
     }
 }
+else if ($_SERVER["REQUEST_METHOD"] == "POST")
+{
+    if(addActivity($_POST))
+    {
+        echo "<script>alert('Attivita aggiunta')
+                location.href = 'index.php?page=1'</script>";
+    }
+}
 ?>
 
 <div class="row">
     <form action="" method="post">
+        <?php if (!isset($_GET["attivita"]))
+            {?>
+            <div class="col-12">
+                <label for="codice">Codice</label>
+                <input type="text" name="codice" class="form-control">
+            </div>
+        <?php }?>
         <div class="col-12">
             <label for="nome">Nome</label>
             <input type="text" name="nome" class="form-control" value="<?php echo $attivita["nome"] ?>">
@@ -72,7 +91,7 @@ if (isset($_GET["attivita"]))
             <input type="text" name="anno2" class="form-control" value="<?php echo $attivita["anno2"] ?>">
         </div>
         <div class="col-12 mt-3">
-            <input type="submit" class="btn btn-primary" value="Modifica">
+            <input type="submit" class="btn btn-primary" value='<?php echo $opzione ?>'>
         </div>
     </form>
 </div>

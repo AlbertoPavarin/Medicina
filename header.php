@@ -12,7 +12,13 @@
           <a class="nav-link active" aria-current="page" href="index.php?page=1">Attivita Didattiche</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link active" href="index.php?page=2">Aggiungi Attività</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link active" href="index.php?page=3">Unità Didattiche</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="index.php?page=4">Aggiungi Unità</a>
         </li>
       </ul>
       <form class="d-flex" role="search">
