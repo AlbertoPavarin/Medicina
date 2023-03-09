@@ -19,7 +19,9 @@ $attivita = array(
     "semestre" => "",
     "descrizione_semestre" => "",
     "anno1" => "",
-    "anno2" => "");
+    "anno2" => "",
+    "formativa" => "",
+    "nome_form" => "");
 
 $opzione = "Aggiungi";
 
@@ -117,8 +119,8 @@ while($record = $response->fetch_assoc())
             <input type="text" name="anno2" class="form-control" value="<?php echo $attivita["anno2"] ?>">
         </div>
         <div class="d-flex justify-content-center align-items-center mt-4">
-            <select id="activities-select" aria-label="Default select example" onchange=getBreakByPickup(this)>
-                    <option selected>Seleziona attività</option>
+            <select id="activities-select" name="attivita" aria-label="Default select example" onchange=getBreakByPickup(this)>
+                    <option selected value="<?php echo $attivita["formativa"] ?>"><?php echo $attivita["nome_form"] ?></option>
                     <?php
                     foreach($activities as $activity)
                     {?>

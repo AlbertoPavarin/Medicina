@@ -3,6 +3,8 @@ include_once dirname(__FILE__) . '/../DB/connect.php';
 
 function updateUnity($codice, $data)
 {
+    var_dump($data);
+    var_dump($codice);
     $db = new Database();
     $conn = $db->connect();
 
@@ -29,7 +31,17 @@ function updateUnity($codice, $data)
                                      $data["ore_laboratorio"], $data["tipo_insegnamento"], 
                                      $data["semestre"], $data["descrizione_semestre"], 
                                      $data["anno1"], $data["anno2"], $codice);
+    if($stmt->execute())
+    {
+        $sql = "UPDATE formativa_didattica
+                SET formativa = ?
+                WHERE didattica = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ss', $data["attivita"], $codice);
+        var_dump($stmt->execute());
+        return $stmt->execute();
+    }
 
-    return $stmt->execute();
+    return false;
 }
 ?>

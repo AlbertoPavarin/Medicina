@@ -4,7 +4,6 @@ include_once dirname(__FILE__) . '/getArchiveActivities.php';
 
 function addUnity($data)
 { 
-    var_dump($activities);
     $db = new Database();
     $conn = $db->connect();
 
@@ -31,6 +30,17 @@ function addUnity($data)
                                      $data["semestre"], $data["descrizione_semestre"], 
                                      $data["anno1"], $data["anno2"]);
 
-    return $stmt->execute();
+    if ($stmt->execute())
+    {
+        $sql = "INSERT INTO formativa_didattica(formativa, didattica)
+                VALUES (?, ?)";
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ss', $data["attivita"], $data["codice"]);
+
+        return $stmt->execute();
+    }
+
+    return false;
 }
 ?>
