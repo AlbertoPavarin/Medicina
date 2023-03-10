@@ -1,8 +1,14 @@
 <?php
 include_once dirname(__FILE__) . '/../functions/getActivity.php';
 include_once dirname(__FILE__) . '/../functions/updateActivity.php';
+include_once dirname(__FILE__) . '/../functions/checkLogin.php';
 include_once dirname(__FILE__) . '/../functions/addActivity.php';
-
+session_start();
+$user = checkLogin();
+if ($user["ruolo"] != "Admin")
+{
+    header('Location: index.php');
+}
 $attivita = array(
     "codice" => "",
     "nome" => "",

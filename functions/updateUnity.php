@@ -3,8 +3,6 @@ include_once dirname(__FILE__) . '/../DB/connect.php';
 
 function updateUnity($codice, $data)
 {
-    var_dump($data);
-    var_dump($codice);
     $db = new Database();
     $conn = $db->connect();
 

@@ -1,8 +1,8 @@
 <?php
 session_start();
 include_once dirname(__FILE__) . '/../functions/getArchiveUnities.php';
-include_once dirname(__FILE__) . '/../functions/checkLogin.php';
-$user = checkLogin();
+include_once dirname(__FILE__) . '/../functions/deleteUnity.php';
+
 
 $activities = array();
 $response = getArchiveUnities();
@@ -10,6 +10,20 @@ $response = getArchiveUnities();
 while($record = $response->fetch_assoc())
 {
     $activities[] = $record;
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST")
+{
+  if (deleteUnity(array_keys($_POST)[0]))
+  {
+    echo "<script>alert('Unità eliminata')
+          location.href = 'index.php?page=3'</script>";
+  }
+  else
+  {
+    echo "<script>alert('Errore nell'eliminazione')
+          location.href = 'index.php?page=3'</script>";
+  }
 }
 ?>
 <table class="table">
@@ -40,7 +54,7 @@ while($record = $response->fetch_assoc())
       if ($user["ruolo"] == "Admin")
       {
       ?>
-        <td><a href="index.php?page=4&attivita=<?php echo $row["codice"] ?>">modifica</a></td>
+        <td><a id="azione" href="index.php?page=4&attivita=<?php echo $row["codice"] ?>">modifica</a> | <form action="" method="post"><input type="submit" id="elimina" value="elimina" name="<?php echo $row["codice"] ?>"><form></td>
       <?php
       }?>
     </tr>

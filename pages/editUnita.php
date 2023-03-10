@@ -4,7 +4,13 @@ include_once dirname(__FILE__) . '/../functions/getUnity.php';
 include_once dirname(__FILE__) . '/../functions/updateActivity.php';
 include_once dirname(__FILE__) . '/../functions/updateUnity.php';
 include_once dirname(__FILE__) . '/../functions/addUnity.php';
-
+include_once dirname(__FILE__) . '/../functions/deleteUnity.php';
+session_start();
+$user = checkLogin();
+if ($user["ruolo"] != "Admin")
+{
+    header('Location: index.php');
+}
 $attivita = array(
     "codice" => "",
     "nome" => "",
@@ -34,7 +40,11 @@ if (isset($_GET["attivita"]))
         if(updateUnity($_GET["attivita"], $_POST))
         {
             echo "<script>alert('Unità modificata')
-                    location.href = 'index.php?page=3'</script>";
+                  location.href = 'index.php?page=3'</script>";
+        }
+        else
+        {
+            echo "<script>alert('Unità modificata')</script>";
         }
     }
 }
@@ -44,6 +54,10 @@ else if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
         echo "<script>alert('Unità aggiunta')
                 location.href = 'index.php?page=3'</script>";
+    }
+    else
+    {
+        echo "<script>alert('Errore nell'aggiunta')</script>";
     }
 }
 
@@ -130,7 +144,7 @@ while($record = $response->fetch_assoc())
             </select> 
         </div> 
         <div class="col-12 mt-3">
-            <input type="submit" class="btn btn-primary" value= '<?php echo $opzione ?>' >
+            <input type="submit" class="btn btn-primary" value= '<?php echo $opzione ?>'>
         </div>
     </form>
 </div>

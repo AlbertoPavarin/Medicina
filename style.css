@@ -77,3 +77,14 @@
 {
   width: 70%;
 }
+
+#elimina{
+  border: none;
+  background-color: transparent;
+  color: black;
+  text-decoration: underline;
+}
+
+#azione {
+  color: black;
+}

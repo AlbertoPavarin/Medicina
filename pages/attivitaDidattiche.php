@@ -3,6 +3,8 @@
 session_start();
 include_once dirname(__FILE__) . '/../functions/getArchiveActivities.php';
 include_once dirname(__FILE__) . '/../functions/checkLogin.php';
+include_once dirname(__FILE__) . '/../functions/checkLogin.php';
+include_once dirname(__FILE__) . '/../functions/deleteActivity.php';
 
 $user = checkLogin();
 
@@ -13,6 +15,21 @@ while($record = $response->fetch_assoc())
 {
     $activities[] = $record;
 }
+
+if ($_SERVER["REQUEST_METHOD"] == "POST")
+{
+  if (deleteUnity(array_keys($_POST)[0]))
+  {
+    echo "<script>alert('Attività eliminata')
+          location.href = 'index.php?page=1'</script>";
+  }
+  else
+  {
+    echo "<script>alert('Errore nell'eliminazione')
+          location.href = 'index.php?page=1'</script>";
+  }
+}
+
 ?>
 <table class="table">
   <thead>
@@ -42,7 +59,7 @@ while($record = $response->fetch_assoc())
       if ($user["ruolo"] == "Admin")
       {
       ?>
-        <td><a href="index.php?page=2&attivita=<?php echo $row["codice"] ?>">modifica</a></td>
+        <td><a id="azione" href="index.php?page=2&attivita=<?php echo $row["codice"] ?>">modifica</a>|<form action="" method="post"><input type="submit" id="elimina" value="elimina" name="<?php echo $row["codice"] ?>"><form></td>
       <?php
       }
       ?>
