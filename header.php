@@ -3,8 +3,8 @@ include_once dirname(__FILE__) . '/functions/getUser.php';
 
 session_start();
 error_reporting(0);
-
-$user = getUser($_SESSION["user_id"]);
+if (isset($_SESSION["user_id"]))
+  $user = getUser($_SESSION["user_id"]);
 
 ?>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -41,6 +41,9 @@ $user = getUser($_SESSION["user_id"]);
         <?php
         }
         ?>
+        <li class="nav-item">
+          <a class="nav-link active" href='functions/logout.php' aria-current="page">Logout</a>
+        </li>
       </ul>
     </div>
   </div>
