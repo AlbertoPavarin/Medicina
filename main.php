@@ -10,14 +10,10 @@ if (!isset($_GET['page']))
     {
         header("Location: index.php?page=1");
     }
-    die();
 }
 
 $page = $_GET['page'];
 switch ($page) {
-    case 0:
-        include("pages/login.php");
-        break;
     case 1:
         include("pages/attivitaDidattiche.php");
         break;

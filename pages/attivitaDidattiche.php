@@ -3,7 +3,6 @@
 session_start();
 include_once dirname(__FILE__) . '/../functions/getArchiveActivities.php';
 include_once dirname(__FILE__) . '/../functions/checkLogin.php';
-include_once dirname(__FILE__) . '/../functions/checkLogin.php';
 include_once dirname(__FILE__) . '/../functions/deleteActivity.php';
 
 $user = checkLogin();

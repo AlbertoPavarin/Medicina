@@ -11,7 +11,7 @@ function checkLogin()
         return $user;
     }
 
-    header("Location: index.php?page=0");
+    header("Location: login.php");
 }
 
 ?>

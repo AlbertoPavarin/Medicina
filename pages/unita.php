@@ -2,7 +2,7 @@
 session_start();
 include_once dirname(__FILE__) . '/../functions/getArchiveUnities.php';
 include_once dirname(__FILE__) . '/../functions/deleteUnity.php';
-
+$user = checkLogin();
 
 $activities = array();
 $response = getArchiveUnities();
